@@ -16,6 +16,7 @@ body {
     font-family: 'Inter', 'Segoe UI', sans-serif;
     background: linear-gradient(145deg, #0a2b3e 0%, #1b4f6e 100%);
     min-height: 100vh; padding: 24px;
+    zoom: 75%;
 }
 .app-container { max-width: 1600px; margin: 0 auto; }
 .glass-header {
@@ -646,37 +647,6 @@ body {
 
         </div>
 
-        <!-- Rateio Quinzenal + Total Geral -->
-        <div class="sobras-card" style="margin-top:30px;">
-            <div class="sobras-title"></div>
-            <div style="margin-top: 20px; width: 100%;">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
-
-                    <!-- Rateio Dia 5 -->
-                    <div style="flex: 1; min-width: 250px; background: rgba(255,255,255,0.7); padding: 16px; border-radius: 24px; border-left: 5px solid #fb8c42; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
-                        <div style="font-size: 0.85rem; font-weight: 700; color: #4a6f8a; text-transform: uppercase; margin-bottom: 8px;"><i class="fas fa-calculator"></i> Rateio Vencimento Dia 5</div>
-                        <div style="font-size: 0.95rem; color: #2c5a78; font-weight: 600; margin-bottom: 4px;">👩 Para Fabi: <strong id="rateioFabiDia5" style="color: #fb8c42;">R$ 0,00</strong></div>
-                        <div style="font-size: 0.95rem; color: #2c5a78; font-weight: 600;">👨 Para Marcão: <strong id="rateioMarcaoDia5" style="color: #fb8c42;">R$ 0,00</strong></div>
-                    </div>
-
-                    <!-- Total Geral -->
-                    <div style="flex: 1; min-width: 280px; text-align: center; background: #eef4fa; padding: 20px; border-radius: 28px; border: 2px dashed #3aa87e; box-shadow: 0 6px 16px rgba(0,0,0,0.05);">
-                        <div style="font-size: 0.9rem; font-weight: 800; color: #1f5068; text-transform: uppercase; margin-bottom: 6px;">Total Geral das Despesas Fixas</div>
-                        <span class="total-percent-badge" style="background: #3aa87e; font-size: 1.4rem !important; padding: 8px 24px; border-radius: 40px; display: inline-block; font-weight: 800;" id="totalGeralDespesasBadge">R$ 0,00</span>
-                    </div>
-
-                    <!-- Rateio Dia 20 -->
-                    <div style="flex: 1; min-width: 250px; background: rgba(255,255,255,0.7); padding: 16px; border-radius: 24px; border-left: 5px solid #3aa87e; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
-                        <div style="font-size: 0.85rem; font-weight: 700; color: #4a6f8a; text-transform: uppercase; margin-bottom: 8px;"><i class="fas fa-calculator"></i> Rateio Vencimento Dia 20</div>
-                        <div style="font-size: 0.95rem; color: #2c5a78; font-weight: 600; margin-bottom: 4px;">👩 Para Fabi: <strong id="rateioFabiDia20" style="color: #3aa87e;">R$ 0,00</strong></div>
-                        <div style="font-size: 0.95rem; color: #2c5a78; font-weight: 600;">👨 Para Marcão: <strong id="rateioMarcaoDia20" style="color: #3aa87e;">R$ 0,00</strong></div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-    </div>
     <!-- FIM DESPESAS -->
     <!-- ============ INVESTIMENTOS ============ -->
     <div id="tabInvest" class="tab-content">
@@ -1380,39 +1350,41 @@ function renderSobras() {
     const cont = document.getElementById("sobrasContainer");
     if (!cont) return;
 
-    const sobFabi   = getSobraFabi();
-    const sobMarcao = getSobraMarcao();
-    const cota      = getCotaResponsabilidade();
-    const sob5      = getSobrasDia5();
-    const sob20     = getSobrasDia20();
+    const fabi5  = getSobraFabiDia5();
+    const marc5  = getSobraMarcaoDia5();
+    const fabi20 = getSobraFabiDia20();
+    const marc20 = getSobraMarcaoDia20();
 
     const cls = v => v >= 0 ? "" : "negativo";
 
     cont.innerHTML = `
         <div class="sobra-nominal-card dia5">
-            <div class="sobra-nominal-nome"><i class="fas fa-user"></i> Fabi</div>
-            <div class="sobra-nominal-valor ${cls(sobFabi)}">${formatReal(sobFabi)}</div>
-            <div class="sobra-nominal-desc">Sobra individual</div>
-            <div class="sobra-nominal-detail">Cota: ${formatReal(cota)}</div>
+            <div class="sobra-nominal-nome"><i class="fas fa-user"></i> Sobra para Fabi</div>
+            <div class="sobra-nominal-valor ${cls(fabi5)}">${formatReal(fabi5)}</div>
+            <div class="sobra-nominal-desc">Dia 5</div>
+            <div class="sobra-nominal-detail">Rend. Dia 5 − cota Dia 5</div>
         </div>
         <div class="sobra-nominal-card dia5">
-            <div class="sobra-nominal-nome"><i class="fas fa-user"></i> Marcão</div>
-            <div class="sobra-nominal-valor ${cls(sobMarcao)}">${formatReal(sobMarcao)}</div>
-            <div class="sobra-nominal-desc">Sobra individual</div>
-            <div class="sobra-nominal-detail">Cota: ${formatReal(cota)}</div>
+            <div class="sobra-nominal-nome"><i class="fas fa-user"></i> Sobra para Marcão</div>
+            <div class="sobra-nominal-valor ${cls(marc5)}">${formatReal(marc5)}</div>
+            <div class="sobra-nominal-desc">Dia 5</div>
+            <div class="sobra-nominal-detail">Rend. Dia 5 − cota Dia 5</div>
         </div>
         <div class="sobra-nominal-card dia20">
-            <div class="sobra-nominal-nome"><i class="fas fa-calendar-day"></i> Sobras Dia 5</div>
-            <div class="sobra-nominal-valor ${cls(sob5)}">${formatReal(sob5)}</div>
-            <div class="sobra-nominal-desc">Faturamento − Despesas</div>
+            <div class="sobra-nominal-nome"><i class="fas fa-user"></i> Sobra para Fabi</div>
+            <div class="sobra-nominal-valor ${cls(fabi20)}">${formatReal(fabi20)}</div>
+            <div class="sobra-nominal-desc">Dia 20</div>
+            <div class="sobra-nominal-detail">Rend. Dia 20 − cota Dia 20</div>
         </div>
         <div class="sobra-nominal-card dia20">
-            <div class="sobra-nominal-nome"><i class="fas fa-calendar-day"></i> Sobras Dia 20</div>
-            <div class="sobra-nominal-valor ${cls(sob20)}">${formatReal(sob20)}</div>
-            <div class="sobra-nominal-desc">Faturamento − Despesas</div>
+            <div class="sobra-nominal-nome"><i class="fas fa-user"></i> Sobra para Marcão</div>
+            <div class="sobra-nominal-valor ${cls(marc20)}">${formatReal(marc20)}</div>
+            <div class="sobra-nominal-desc">Dia 20</div>
+            <div class="sobra-nominal-detail">Rend. Dia 20 − cota Dia 20</div>
         </div>
     `;
 }
+
 /* ================= GRÁFICOS ================= */
 let categoryChartInstance = null;
 let balanceChartInstance = null;
