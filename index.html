@@ -536,6 +536,12 @@ body {
             <h3 style="color:#2a5f7a;"><i class="fas fa-scale-balanced"></i> Fechamento Quinzenal (Dia 20 / Dia 5)</h3>
             <p style="margin:8px 0 16px; color:#3f6b88;">Faturamento bruto, despesas da quinzena e divisão 50/50 das sobras para Fabi e Marcão</p>
             <div id="rateioCardsContainer" class="rateio-cards"></div>
+            <div style="margin-top: 20px; width: 100%;">
+    <div style="text-align: center; background: #eef4fa; padding: 20px; border-radius: 28px; border: 2px dashed #3aa87e; box-shadow: 0 6px 16px rgba(0,0,0,0.05);">
+        <div style="font-size: 0.9rem; font-weight: 800; color: #1f5068; text-transform: uppercase; margin-bottom: 6px;">Total Geral das Despesas Fixas</div>
+        <span class="total-percent-badge" style="background: #3aa87e; font-size: 1.4rem !important; padding: 8px 24px; border-radius: 40px; display: inline-block; font-weight: 800;" id="totalGeralDespesasBadgeDashboard">R$ 0,00</span>
+    </div>
+</div>
         </div>
 
         <!-- Gráficos -->
@@ -1283,6 +1289,11 @@ function renderDashboard() {
     renderContribuicoesFilhos();
     renderRateioCards();
     renderSobras();
+        // Atualiza o card Total Geral no Dashboard
+    const totalGeralDash = document.getElementById("totalGeralDespesasBadgeDashboard");
+    if (totalGeralDash) {
+        totalGeralDash.innerHTML = formatReal(getDespesasTotais());
+    }
 
     updateExpenseTotals();
     updateInvestTotals();
