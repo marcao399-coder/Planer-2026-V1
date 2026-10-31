@@ -535,7 +535,7 @@ body {
         <div class="rateio-panel">
             <h3 style="color:#2a5f7a;"><i class="fas fa-scale-balanced"></i> Fechamento Quinzenal (Dia 20 / Dia 5)</h3>
             <p style="margin:8px 0 16px; color:#3f6b88;">Faturamento bruto, despesas da quinzena e divisão 50/50 das sobras para Fabi e Marcão</p>
-            <div id="rateioCardsContainer" class="rateio-cards"></div>
+            <div id="rateioCardsContainer" class="sobras-nominais-grid"></div>
             <div style="margin-top: 20px; width: 100%;">
     <div style="text-align: center; background: #eef4fa; padding: 20px; border-radius: 28px; border: 2px dashed #3aa87e; box-shadow: 0 6px 16px rgba(0,0,0,0.05);">
         <div style="font-size: 0.9rem; font-weight: 800; color: #1f5068; text-transform: uppercase; margin-bottom: 6px;">Total Geral das Despesas Fixas</div>
@@ -1338,48 +1338,44 @@ function renderRateioCards() {
     const cont = document.getElementById("rateioCardsContainer");
     if (!cont) return;
 
-    const sob20 = getSobrasDia20();
-    const sob5  = getSobrasDia5();
-    const fabi5 = getSobraFabiDia5();
-    const marc5 = getSobraMarcaoDia5();
-    const fabi20 = getSobraFabiDia20();
-    const marc20 = getSobraMarcaoDia20();
+    const desp5 = getDespesasPorVencimento(5);
+    const desp20 = getDespesasPorVencimento(20);
+    const totalGeral = desp5 + desp20;
+    
+    const sobFabi = getSobraFabi();
+    const sobMarcao = getSobraMarcao();
+
+    const cls = v => v >= 0 ? "" : "negativo";
 
     cont.innerHTML = `
-        <div class="person-card">
-            <div class="person-name">Fabi · Dia 5</div>
-            <div class="person-value" style="color:${fabi5 >= 0 ? '#3aa87e' : '#e74c3c'}">${formatReal(fabi5)}</div>
-            <div class="person-percent">Cota: ${formatReal(getCotaDia5())}</div>
+        <div class="sobra-nominal-card dia5">
+            <div class="sobra-nominal-nome"><i class="fas fa-calendar-day"></i> Dia 20</div>
+            <div class="sobra-nominal-valor" style="color: #fb8c42;">${formatReal(desp20)}</div>
+            <div class="sobra-nominal-desc" style="color: #fb8c42;">Desp: ${formatReal(desp20)}</div>
         </div>
-        <div class="person-card">
-            <div class="person-name">Marcão · Dia 5</div>
-            <div class="person-value" style="color:${marc5 >= 0 ? '#3aa87e' : '#e74c3c'}">${formatReal(marc5)}</div>
-            <div class="person-percent">Cota: ${formatReal(getCotaDia5())}</div>
+        <div class="sobra-nominal-card dia5">
+            <div class="sobra-nominal-nome"><i class="fas fa-calendar-day"></i> Dia 5</div>
+            <div class="sobra-nominal-valor" style="color: #fb8c42;">${formatReal(desp5)}</div>
+            <div class="sobra-nominal-desc" style="color: #fb8c42;">Desp: ${formatReal(desp5)}</div>
         </div>
-        <div class="person-card">
-            <div class="person-name">Fabi · Dia 20</div>
-            <div class="person-value" style="color:${fabi20 >= 0 ? '#3aa87e' : '#e74c3c'}">${formatReal(fabi20)}</div>
-            <div class="person-percent">Cota: ${formatReal(getCotaDia20())}</div>
+        <div class="sobra-nominal-card dia20">
+            <div class="sobra-nominal-nome"><i class="fas fa-user"></i> Fabi</div>
+            <div class="sobra-nominal-valor ${cls(sobFabi)}">${formatReal(sobFabi)}</div>
+            <div class="sobra-nominal-desc">Sobra individual</div>
         </div>
-        <div class="person-card">
-            <div class="person-name">Marcão · Dia 20</div>
-            <div class="person-value" style="color:${marc20 >= 0 ? '#3aa87e' : '#e74c3c'}">${formatReal(marc20)}</div>
-            <div class="person-percent">Cota: ${formatReal(getCotaDia20())}</div>
+        <div class="sobra-nominal-card dia20">
+            <div class="sobra-nominal-nome"><i class="fas fa-user"></i> Marcão</div>
+            <div class="sobra-nominal-valor ${cls(sobMarcao)}">${formatReal(sobMarcao)}</div>
+            <div class="sobra-nominal-desc">Sobra individual</div>
         </div>
-        <div class="person-card" style="background:#eef4fa;">
-            <div class="person-name">Sobras Dia 5</div>
-            <div class="person-value" style="color:${sob5 >= 0 ? '#3aa87e' : '#e74c3c'}">${formatReal(sob5)}</div>
-            <div class="person-percent">Fat. Dia 5 − Desp. Dia 5</div>
-        </div>
-        <div class="person-card" style="background:#eef4fa;">
-            <div class="person-name">Sobras Dia 20</div>
-            <div class="person-value" style="color:${sob20 >= 0 ? '#3aa87e' : '#e74c3c'}">${formatReal(sob20)}</div>
-            <div class="person-percent">Fat. Dia 20 − Desp. Dia 20</div>
+        <div class="sobra-nominal-card" style="background: linear-gradient(135deg, #2c7a5c, #3aa87e); border-left: 4px solid #1e6b4e;">
+            <div class="sobra-nominal-nome" style="color: white;"><i class="fas fa-wallet"></i> TOTAL MÊS</div>
+            <div class="sobra-nominal-valor" style="color: white; font-weight: 800;">${formatReal(totalGeral)}</div>
+            <div class="sobra-nominal-desc" style="color: #eafaf3;">Raspando o mês</div>
         </div>
     `;
 }
 
-/* ---------- Sobras do mês (cards detalhados) ---------- */
 function renderSobras() {
     const cont = document.getElementById("sobrasContainer");
     if (!cont) return;
