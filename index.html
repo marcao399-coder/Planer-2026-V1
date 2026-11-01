@@ -536,12 +536,7 @@ body {
             <h3 style="color:#2a5f7a;"><i class="fas fa-scale-balanced"></i> Fechamento Quinzenal (Dia 20 / Dia 5)</h3>
             <p style="margin:8px 0 16px; color:#3f6b88;">Faturamento bruto, despesas da quinzena e divisão 50/50 das sobras para Fabi e Marcão</p>
             <div id="rateioCardsContainer" class="sobras-nominais-grid"></div>
-            <div style="margin-top: 20px; width: 100%;">
-    <div style="text-align: center; background: #eef4fa; padding: 20px; border-radius: 28px; border: 2px dashed #3aa87e; box-shadow: 0 6px 16px rgba(0,0,0,0.05);">
-        <div style="font-size: 0.9rem; font-weight: 800; color: #1f5068; text-transform: uppercase; margin-bottom: 6px;">Total Geral das Despesas Fixas</div>
-        <span class="total-percent-badge" style="background: #3aa87e; font-size: 1.4rem !important; padding: 8px 24px; border-radius: 40px; display: inline-block; font-weight: 800;" id="totalGeralDespesasBadgeDashboard">R$ 0,00</span>
-    </div>
-</div>
+           
         </div>
 
         <!-- Gráficos -->
@@ -638,16 +633,34 @@ body {
                     <tfoot>
                         <tr style="background:#e9f2f9; font-weight:700;">
                             <td colspan="2">TOTAL DIA 20</td>
-                            <td style="text-align:right;" id="totalDia20Footer">R$ 0,00</td>
-                        </tr>
                     </tfoot>
                 </table>
             </div>
-
         </div>
+    </div>
 
-    <!-- FIM DESPESAS -->
-    <!-- ============ INVESTIMENTOS ============ -->
+    <!-- Painel de Rateio das Despesas do Casal (Os 3 Cards) -->
+    <div style="margin-top: 30px; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        <div style="background: white; border-radius: 24px; padding: 20px; text-align: center; border-left: 5px solid #fb8c42; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+            <div style="font-size: 0.85rem; font-weight: 700; color: #4a6f8a; text-transform: uppercase;">Cota Casal Dia 5 (Cada Um)</div>
+            <div style="font-size: 1.8rem; font-weight: 800; color: #fb8c42; margin: 10px 0;" id="rateioFabiDia5">R$ 0,00</div>
+            <div style="font-size: 0.75rem; color: #6b8ba3;">Metade das despesas do Dia 5</div>
+        </div>
+        <div style="background: linear-gradient(135deg, #1f5068, #1a4b6e); border-radius: 24px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+            <div style="font-size: 0.85rem; font-weight: 700; color: #cae3f0; text-transform: uppercase;">Total Geral Despesas Fixas</div>
+            <div style="font-size: 2rem; font-weight: 800; color: white; margin: 10px 0;" id="totalGeralDespesasBadge">R$ 0,00</div>
+            <div style="font-size: 0.75rem; color: #cae3f0;">Soma total das duas quinzenas</div>
+        </div>
+        <div style="background: white; border-radius: 24px; padding: 20px; text-align: center; border-left: 5px solid #3aa87e; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+            <div style="font-size: 0.85rem; font-weight: 700; color: #4a6f8a; text-transform: uppercase;">Cota Casal Dia 20 (Cada Um)</div>
+            <div style="font-size: 1.8rem; font-weight: 800; color: #3aa87e; margin: 10px 0;" id="rateioFabiDia20">R$ 0,00</div>
+            <div style="font-size: 0.75rem; color: #6b8ba3;">Metade das despesas do Dia 20</div>
+        </div>
+    </div>
+</div>
+
+<!--  ============ INVESTIMENTOS ============ -->
+
     <div id="tabInvest" class="tab-content">
         <h2><i class="fas fa-chart-line"></i> Investimentos</h2>
 
